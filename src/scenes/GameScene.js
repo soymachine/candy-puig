@@ -3,7 +3,7 @@ import {
   GAME_WIDTH, GAME_HEIGHT,
   GRID_ROWS, GRID_COLS, MIN_COLS, MIN_CELL_SIZE, NUM_GEM_TYPES,
   BOARD_PADDING, BOARD_TOP_OFFSET,
-  SWAP_SPEED, FALL_SPEED, DESTROY_SPEED, CASCADE_DELAY,
+  SWAP_SPEED, FALL_SPEED, DESTROY_SPEED, CASCADE_DELAY, COLUMN_STAGGER,
   TOTAL_MOVES, SWIPE_THRESHOLD,
   POINTS_PER_GEM, BONUS_PER_EXTRA, CASCADE_MULTIPLIER,
   BOARD_BG_COLOR, HIGHLIGHT_COLOR, GEM_KEYS,
@@ -608,7 +608,8 @@ export default class GameScene extends Phaser.Scene {
         }
       }
 
-      // Fill empty top positions with new gems
+      // Fill empty top positions with new gems (staggered per column)
+      const colDelay = c * COLUMN_STAGGER;
       for (let r = 0; r < this.rows; r++) {
         if (this.grid[r][c] === -1) {
           const type = Phaser.Math.Between(0, NUM_GEM_TYPES - 1);
@@ -618,15 +619,19 @@ export default class GameScene extends Phaser.Scene {
           const startY = this.boardY - (this.rows - r) * this.cellSize;
           const sprite = this.createGemSprite(r, c, type);
           sprite.y = startY;
+          sprite.setAlpha(0);
 
           const dur = FALL_SPEED * (this.rows - r + 1);
-          maxDuration = Math.max(maxDuration, dur);
+          const totalDur = colDelay + dur;
+          maxDuration = Math.max(maxDuration, totalDur);
           hasTweens = true;
 
           this.tweens.add({
             targets: sprite,
             y: y,
+            alpha: 1,
             duration: dur,
+            delay: colDelay,
             ease: 'Bounce.easeOut',
           });
         }

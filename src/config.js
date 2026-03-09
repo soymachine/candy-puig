@@ -18,6 +18,7 @@ export const SWAP_SPEED = 200;
 export const FALL_SPEED = 80; // Per row
 export const DESTROY_SPEED = 200;
 export const CASCADE_DELAY = 100;
+export const COLUMN_STAGGER = 50; // Delay between each column's new gems dropping
 
 // Gameplay
 export const TOTAL_MOVES = 30;
