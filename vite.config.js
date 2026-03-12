@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  base: '/candy-puig/',
+export default defineConfig(({ command }) => ({
+  base: command === 'build' ? '/candy-puig/' : '/',
   server: {
     port: 3000,
     open: true
@@ -10,4 +10,4 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets'
   }
-});
+}));

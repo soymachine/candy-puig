@@ -173,5 +173,7 @@ fs.writeFileSync(path.join(SND_DIR, 'no-match.wav'), generateTone(200, 0.2, 0.2)
 fs.writeFileSync(path.join(SND_DIR, 'gameover.wav'), generateTone(330, 0.4, 0.3));
 // Select sound
 fs.writeFileSync(path.join(SND_DIR, 'select.wav'), generateTone(660, 0.06, 0.15));
+// Land sound - short low thud
+fs.writeFileSync(path.join(SND_DIR, 'land.wav'), generateTone(150, 0.06, 0.25));
 
 console.log('Done! Assets generated in public/assets/');
